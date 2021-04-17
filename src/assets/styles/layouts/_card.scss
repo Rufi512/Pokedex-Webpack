@@ -1,0 +1,165 @@
+@use "../abstracts/mixins" as mix;
+@use "../abstracts/colors" as backgrounds;
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  align-content:center;
+  min-height:100vh;
+
+  .card {
+    @include mix.centered(column, center, unset);
+    width: 94%;
+    padding: 5px 8px;
+    height: fit-content;
+    max-width:720px;
+    min-height: 580px;
+    margin: 20px auto;
+    border-radius: 5px;
+    background: #efefef;
+    background: linear-gradient(142deg, #ffffffb5 0%, #ffffffd1 100%);
+
+    .card-header {
+      @include mix.centered(column, center, unset);
+      height: fit-content;
+      margin: 0 auto;
+      width: 100%;
+      > div:first-child {
+        width: 90%;
+        justify-content: space-between;
+
+        p {
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+      .container-types {
+        @include mix.centered(row, center, unset);
+        div {
+          flex-direction: row;
+          color: white;
+          background: #020202d1;
+          padding: 4px 10px;
+          margin: 0 10px;
+          border-radius: 60px;
+
+          p {
+            text-transform: capitalize;
+            margin: 0 5px;
+          }
+        }
+      }
+      div {
+        @include mix.centered(column, center, unset);
+        img {
+          width: 125px;
+          height: 125px;
+        }
+      }
+    }
+
+    .card-body {
+      @include mix.centered(column, center, unset);
+      width: 100%;
+      overflow:hidden;
+
+      .selectors {
+        position: relative;
+        @include mix.centered(row, center, space-around);
+        margin-top: 10px;
+        border-bottom: 2px solid black;
+        width: 100%;
+        #line-selector{
+          position: absolute;
+          left: 0px;
+          bottom: -2px;
+          width: 0px;
+          background: white;
+          height: 3px;
+          z-index: 1000;
+          transition: all 0.3s linear;
+        }
+
+        p {
+          margin: 0;
+          width: 84px;
+          text-align: center;
+          font-weight: 600;
+          cursor: pointer;
+          color:black;
+        }
+      }
+
+      .container-information {
+        display: flex;
+        width: 100%;
+        min-height: 220px;
+        transform: translateX(0%);
+        transition: all 0.5s cubic-bezier(0.07, 1.07, 0.58, 1) 0s;
+ 
+        .information {
+          display: flex;
+          width: 100%;
+          margin-top:25px;
+          align-content: baseline;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          flex-shrink: 0;
+          .card-information {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 108px;
+            height: 158px;
+            background: #fdfdfd;
+            box-shadow: 0 3px 8px #656565;
+            margin: 20px;
+            padding: 10px 5px;
+            border-radius: 8px;
+            > p:first-child {
+              margin: 20px 0;
+            }
+
+            p {
+              margin: 0;
+            }
+          }
+          .various{
+            background: #fdfdfd;
+            box-shadow: 0 3px 8px #656565;
+            width:122px;
+            height:160px;
+            padding: 10px 0px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: flex-end;
+            color: white;
+            margin:20px;
+
+            div{
+              @include mix.centered(column,center,center);
+              p{
+                @include mix.centered(column,center,center);
+                border-radius: 25px;
+                width:108px;
+                height:25px;
+              }
+           
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@each $name, $color in backgrounds.$type_pokemon {
+  .#{$name} {
+    background: $color !important;
+  }
+}

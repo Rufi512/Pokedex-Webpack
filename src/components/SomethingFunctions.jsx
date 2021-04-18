@@ -123,6 +123,10 @@ export const eggsPokemons = (name) =>{
       return <p className={'egg-'+name} style={{background: '#333333'}}>Marine</p>;
       break;
 
+    case 'plant':
+      return <p className={'egg-'+name} style={{background: '#333333'}}>Bug</p>;
+      break;
+
     case 'bug':
       return <p className={'egg-'+name} style={{background: '#333333'}}>Bug</p>;
       break;
@@ -153,6 +157,10 @@ export const eggsPokemons = (name) =>{
 
     case 'grass':
       return <p className={'egg-'+name} style={{background: '#333333'}}>Grass</p>;
+      break;
+
+    case 'ground':
+      return <p className={'egg-'+name} style={{background: '#333333'}}>Ground</p>;
       break;
 
     case 'dragon':

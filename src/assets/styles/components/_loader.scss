@@ -2,36 +2,26 @@
 @use "../abstracts/mixins" as mix;
 
 .loader {
-  @include mix.centered(column, center, center);
+  @include mix.centered(row, center, center);
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  bottom:0;
   width: 100%;
-  height: 100vh;
-  background-color: #f0f8ffe6;
+  height: 50px;
+  background-color: #fff;
+  z-index:10000;
+  transform:translateY(100%);
+  transition:all 0.3s ease;
 
   svg,
   img {
+    width:32px;
+    height:32px;
     @include mix.rotateAnimation(0.9s, 360deg);
+  }
+
+  p,img{
+    margin: 0 10px;
   }
 }
 
-.loader-list {
-  display: none !important;
-  position: fixed;
-  top: 40px;
-  bottom: 0;
-  display: inline-flex;
-  align-items: center;
-  height: max-content;
-  z-index: 100;
-  justify-content: center;
-  cursor: default;
-  transition: all 0.5s ease;
-  svg {
-    @include mix.rotateAnimation(1s, -360deg);
-  }
-}
 

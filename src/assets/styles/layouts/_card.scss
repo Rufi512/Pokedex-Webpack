@@ -15,7 +15,7 @@
     height: fit-content;
     max-width:720px;
     min-height: 580px;
-    margin: 20px auto;
+    margin: 15px auto;
     border-radius: 5px;
     background: #efefef;
     background: linear-gradient(142deg, #ffffffb5 0%, #ffffffd1 100%);
@@ -69,6 +69,7 @@
         @include mix.centered(row, center, space-around);
         margin-top: 10px;
         border-bottom: 2px solid black;
+        padding-bottom: 2px;
         width: 100%;
         #line-selector{
           position: absolute;
@@ -77,7 +78,7 @@
           width: 0px;
           background: white;
           height: 3px;
-          z-index: 1000;
+          z-index: 1;
           transition: all 0.3s linear;
         }
 
@@ -87,7 +88,7 @@
           text-align: center;
           font-weight: 600;
           cursor: pointer;
-          color:black;
+          color:#424242;
         }
       }
 
@@ -101,16 +102,13 @@
         .information {
           display: flex;
           width: 100%;
-          margin-top:25px;
+          margin-top:15px;
           align-content: baseline;
           justify-content: space-around;
           flex-wrap: wrap;
           flex-shrink: 0;
           .card-information {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            @include mix.centered(column,center,space-around);
             width: 108px;
             height: 158px;
             background: #fdfdfd;
@@ -156,6 +154,38 @@
       }
     }
   }
+}
+
+/*Break Point*/
+@media(max-width:700px){
+  .card-information{
+    width: 105px !important;
+    height: 135px !important;
+    margin: 15px !important;
+
+  p{
+    font-size:14px;
+  }
+
+}
+
+.container-information{
+  .ambient{
+    .various{
+      div{
+        width: 122px;
+        height: 120px;
+        p{
+          width: 75px !important;
+          font-size: 14px;
+          height: 25px !important;
+          margin:5px 0;
+        }
+      }
+    }
+  }
+}
+
 }
 
 @each $name, $color in backgrounds.$type_pokemon {

@@ -1,5 +1,8 @@
 .progress-ring{
+	width:55px;
+	height:55px;
   fill: transparent;
+  margin-bottom:15px;
 }
 
 .progress-ring__circle {
@@ -7,3 +10,4 @@
   transform: rotate(270deg);
   transform-origin: 50% 50%; 
 }
+

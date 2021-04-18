@@ -1,53 +1,54 @@
 import axios from "axios";
 
-export const getSuggestions = async () =>{
-  const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1118').catch((err)=>{return err.response})
-  if(!res && ! res.status === 200){
-    console.log('error')
-    return 'Error'
-  }else{
-    return res.data.results
+export const getSuggestions = async () => {
+  const res = await axios
+    .get("https://pokeapi.co/api/v2/pokemon?limit=1118")
+    .catch((err) => {
+      return err.response;
+    });
+  if (!res || !res.status === 200) {
+    console.log("error");
+    return "Error";
+  } else {
+    return res.data.results;
   }
-}
+};
 
 export const getListPokemon = async (page) => {
   let arrayPokemon = [];
   const res = await axios
     .get(`https://pokeapi.co/api/v2/pokemon?limit=${12}&offset=${page}`)
-    .catch((err) => { 
-      return err
-    });
-    
-  if(!res.data){
-    console.log('Información no encontrada')
-    return 'Error'
-  }else{
-  const pokemons = res.data.results;
-  for (const el of pokemons) {
-    let pokemon = {
-      id: null,
-      name: "",
-      type: [],
-      sprite: "",
-    };
-
-    const details = await axios.get(el.url).catch((err) => {
-      console.log(err);
+    .catch((err) => {
+      return err.response;
     });
 
-    for (const detail of details.data.types) {
-      pokemon.type.push(detail.type.name);
+  if (!res && !res.status !== 200) {
+    return "Error";
+  } else {
+    const pokemons = res.data.results;
+    for (const el of pokemons) {
+      let pokemon = {
+        id: null,
+        name: "",
+        type: [],
+        sprite: "",
+      };
+
+      const details = await axios.get(el.url).catch((err) => {
+        console.log(err);
+      });
+
+      for (const detail of details.data.types) {
+        pokemon.type.push(detail.type.name);
+      }
+      pokemon.id = details.data.id;
+      pokemon.name = el.name;
+      pokemon.sprite = details.data.sprites.front_default;
+      arrayPokemon.push(pokemon);
     }
-    pokemon.id = details.data.id;
-    pokemon.name = el.name;
-    pokemon.sprite = details.data.sprites.front_default;
-    arrayPokemon.push(pokemon);
+
+    return arrayPokemon;
   }
-
-  return arrayPokemon;
-    
-}
-
 };
 
 export const getPokemonData = async (id) => {
@@ -68,45 +69,46 @@ export const getPokemonData = async (id) => {
     stats_normal: [
       {
         name: "HP",
-        colorStroke:'#d7443e',
+        colorStroke: "#d7443e",
         value: null,
       },
       {
         name: "Attack",
-        colorStroke:'#ffc73a',
+        colorStroke: "#ffc73a",
         value: null,
       },
       {
         name: "Defense",
-        colorStroke:'#42a5f5',
+        colorStroke: "#42a5f5",
         value: null,
       },
       {
         name: "Speed",
-        colorStroke:'#58bdf5',
+        colorStroke: "#58bdf5",
         value: null,
       },
     ],
     stats_special: [
       {
         name: "Attack",
-        colorStroke:'#ffc73a',
+        colorStroke: "#ffc73a",
         value: null,
       },
       {
         name: "Defense",
-        colorStroke:'#42a5f5',
+        colorStroke: "#42a5f5",
         value: null,
       },
     ],
-    evolutions: [],
   };
   const res = await axios
     .get("https://pokeapi.co/api/v2/pokemon/" + id)
     .catch((err) => {
       console.log(err);
+      return err.response;
     });
-  if (res) {
+
+  if (res.status === 200) {
     const species = await axios.get(res.data.species.url).catch((err) => {
       console.log(err);
     });
@@ -129,35 +131,6 @@ export const getPokemonData = async (id) => {
         : "Not found";
       pokemon.happiness = species.data.base_happiness;
       pokemon.captureRate = species.data.capture_rate;
-
-      const evolution = await axios
-        .get(species.data.evolution_chain.url)
-        .catch((e) => {
-          console.log(e);
-        });
-      if (evolution.data) {
-        const evolutions = evolution.data.chain.evolves_to;
-        for (const data of evolutions) {
-          const res = await axios
-            .get("https://pokeapi.co/api/v2/pokemon/" + data.species.name)
-            .catch((err) => {
-              console.log(err);
-            });
-          let typesPokemonEvolution = [];
-          console.log(res);
-          if (res) {
-            for (const typePokemon of res.data.types) {
-              console.log(typePokemon);
-              typesPokemonEvolution.push(typePokemon.type.name);
-            }
-            pokemon.evolutions.push({
-              name: data.species.name,
-              sprite: res.data.sprites.front_default,
-              type: typesPokemonEvolution,
-            });
-          }
-        }
-      }
     }
     const abilities = res.data.abilities;
     for (const el of abilities) {
@@ -181,22 +154,25 @@ export const getPokemonData = async (id) => {
     pokemon.stats_special[1].value = res.data.stats[4].base_stat;
 
     return pokemon;
+  } else {
+    return "Error";
   }
 };
 
-
-export const getPokemonFavortitesData = async (id) =>{
-  const res = await axios.get("https://pokeapi.co/api/v2/pokemon/" + id).catch((err) => {
-              console.log(err);
-            });
-   if(!res && ! res.status === 200){
-    console.log(res)
-    return 'Error!'
-   }else{
-    return({
-      id:res.data.id,
+export const getPokemonFavortitesData = async (id) => {
+  const res = await axios
+    .get("https://pokeapi.co/api/v2/pokemon/" + id)
+    .catch((err) => {
+      console.log(err);
+    });
+  if (!res || !res.status === 200) {
+    console.log(res);
+    return "Error";
+  } else {
+    return {
+      id: res.data.id,
       name: res.data.name,
-      sprite:res.data.sprites.front_default
-    })
-   }
-}
+      sprite: res.data.sprites.front_default,
+    };
+  }
+};

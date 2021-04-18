@@ -5,7 +5,7 @@
 @use "components/loader";
 @use "components/progressRing";
 @use "abstracts/mixins" as mix;
-@import "abstracts/colors";
+@use "abstracts/colors" as backgrounds;
 $Background: #ececec;
 
 body {
@@ -62,13 +62,13 @@ h3 {
   }
 }
 
-@each $name, $color in $egg_pokemon {
+@each $name, $color in backgrounds.$egg_pokemon {
   .egg-#{$name} {
     background: $color !important;
   }
 }
 
-@each $name, $color in $habitat_pokemon {
+@each $name, $color in backgrounds.$habitat_pokemon {
   .habitat-#{$name} {
     background: $color !important;
   }

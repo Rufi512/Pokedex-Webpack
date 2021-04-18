@@ -17,7 +17,58 @@ export const ProgressCircle = (props) => {
     load();
   }, [props]);
 
+  
   return (
+       
+     <svg className="progress-ring" style={{marginBottom:'15px'}} width="74" height="74">
+     
+      <circle
+        className="progress-ring__circle"
+        fill="transpartent"
+        stroke="#232323"
+        strokeWidth="5"
+        r="24"
+        cy="28"
+        cx="27"
+        strokeDasharray="151, 151"
+        strokeDashoffset="0" 
+      />
+
+      <circle
+        ref={progress}
+        className="progress-ring__circle"
+        fill="transpartent"
+        stroke={props.color}
+        strokeDasharray="151, 151"
+        strokeDashoffset={`${offset >= 0 ? offset : 0 }`}
+        strokeWidth="5"
+        r="24"
+        cy="28"
+        cx="27"
+      />
+
+      <text x="50%" y="53%" textAnchor="middle" fill="#000"  dy=".3em">
+        {props.points}
+      </text>
+    </svg>
+    
+  );
+};
+
+
+  /*
+   <circle
+        className="progress-ring__circle"
+        fill="transpartent"
+        stroke="#232323"
+        strokeWidth="5"
+        r="30"
+        cy="37"
+        cx="39"
+        strokeDasharray="190.496, 190.496"
+        strokeDashoffset="0" 
+      />
+
     <svg className="progress-ring" style={{marginBottom:'15px'}} width="74" height="74">
       <circle
         className="progress-ring__circle"
@@ -48,5 +99,4 @@ export const ProgressCircle = (props) => {
         {props.points}
       </text>
     </svg>
-  );
-};
+    */

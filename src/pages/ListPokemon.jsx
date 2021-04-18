@@ -1,53 +1,70 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import {connect} from 'react-redux'
-import {getListPokemon} from "../components/API"
+import { connect } from "react-redux";
+import { Loader } from "../components/Loader";
+import { getListPokemon } from "../components/API";
 import { typePokemon } from "../components/SomethingFunctions";
 import SearchIcon from "../assets/icons/search.svg";
-import LoaderIcon from "../assets/icons/loader.svg";
 
 export const ListPokemon = () => {
+  let history = useHistory();
 
-  let history = useHistory()
+  const [pokemons, setPokemons] = useState([]);
 
-  const [pokemons,setPokemons] = useState([])
+  const [loading, setLoading] = useState(false);
 
-  const [loading,setLoading] = useState(false)
-  
+  const [error,setError] = useState(false)
+
   const [page, setPage] = useState(0);
-  
+
   useEffect(() => {
     setLoading(true);
-    const load = async () =>{
-    if (pokemons.length === 0) {
-     const res = await getListPokemon(0);
-      console.log(res)
-      if(res !== 'Error'){
-      setPokemons(res)
-    }
-  }
-
-    if (pokemons) { 
-      setLoading(false);
-    }
-  }
+    setError(false)
+    const load = async () => {
+      if (pokemons.length === 0) {
+        const res = await getListPokemon(0);
+        if (res !== "Error") {
+          setPokemons(res);
+        }else{
+          setError(true)
+        }
+      }
+      if (pokemons) {
+        setLoading(false);
+      }
+    };
     load();
   }, []);
 
-  const loadPokemons = async () =>{
-    const res = await getListPokemon(page+12)
-    if(!res.status === 200){
-      console.log(res)
-    }else{
-    setPage(page+12)
-    for(const pokemon of res ){
-      setPokemons((olds) => [...olds, pokemon]);
+  const loadPokemons = async () => {
+    if (loading !== true) {
+      setLoading(true);
+      const res = await getListPokemon(page + 12);
+      if (res === 'Error') {
+        alert("Fail to request")
+        return ''
+      } else {
+        setPage(page + 12);
+        for (const pokemon of res) {
+          setPokemons((olds) => [...olds, pokemon]);
+        }
+        setLoading(false);
+      }
     } 
+  };
+
+  if(error){
+    return(
+       <div className="error-pokemon">
+       <h2>An error has occurred, try to reload the page</h2>
+       <button type="button" onClick={(e)=>{window.location.reload()}}>Reload</button>
+       </div>
+      )
   }
-}
 
   return (
     <React.Fragment>
+      <Loader loading={loading} />
       <div className="list-container">
         {pokemons.map((el, i) => {
           let typeOne = "";
@@ -65,7 +82,7 @@ export const ListPokemon = () => {
               className="pokemon-card"
               key={i}
               onClick={(e) => {
-                history.push(`/info/${i+1}`);
+                history.push(`/info/${i + 1}`);
               }}
             >
               <div
@@ -98,18 +115,6 @@ export const ListPokemon = () => {
             </div>
           );
         })}
-
-        <div
-          className="loader-list"
-          style={{
-            transform: loading === true ? "translateY(0%)" : "translateY(100%)",
-          }}
-        >
-          <LoaderIcon style={{ width: "24px", marginRight: "5px" }} />{" "}
-          <p> Loading...</p>
-        </div>
-
-
       </div>
 
       <button
@@ -118,8 +123,7 @@ export const ListPokemon = () => {
           transform: loading === true ? "translateY(100%)" : "translateY(0%)",
         }}
         onClick={(e) => {
-          console.log('request');
-          loadPokemons(); 
+          loadPokemons();
         }}
       >
         Load more
@@ -128,8 +132,8 @@ export const ListPokemon = () => {
   );
 };
 
-const mapStateToProps = (state) =>({})
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListPokemon)
+export default connect(mapStateToProps, mapDispatchToProps)(ListPokemon);

@@ -80,7 +80,7 @@ const TopBar = ({ pokemons }) => {
     <>
       <div className="top-bar">
         <MenuIcon
-          style={{ padding: "4px", cursor: "pointer" }}
+          style={{padding: "8px 16px 9px 4px", cursor: "pointer" }}
           onClick={(e) => {
             showSidebar(true);
           }}
@@ -97,7 +97,7 @@ const TopBar = ({ pokemons }) => {
 
       <div ref={sidebar} className="sidebar">
         <CloseIcon
-          style={{ cursor: "pointer" }}
+          style={{padding: "8px 16px 9px 4px",cursor: "pointer" }}
           onClick={(e) => {
             showSidebar(false);
           }}
@@ -119,7 +119,7 @@ const TopBar = ({ pokemons }) => {
                       setOnSearch(false);
                     }
                   }}
-                  placeholder="Search the pokemon with name!"
+                  placeholder="Search pokemon"
                   value={toSearch || ""}
                 />
               </div>

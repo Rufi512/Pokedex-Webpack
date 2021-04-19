@@ -3,20 +3,20 @@ const htmlWebpackPlugin = require('html-webpack-plugin')
 const minicssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
   entry: ['@babel/polyfill','./src/index.js'],
-  mode:'development',
+  mode:'production',
   output:{
     path:path.resolve(__dirname, '../build'),
     filename:'js/bundle.js',
     publicPath:'/'
   },
 
-  devServer:{
+ /* devServer:{
     host: 'localhost',
     port:4000,
     disableHostCheck:true,
     historyApiFallback:true
   },
-
+*/
   resolve:{
      extensions:['.js','.jsx']
   },

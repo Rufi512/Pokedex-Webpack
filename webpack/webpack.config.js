@@ -6,8 +6,8 @@ module.exports = {
   mode:'production',
   output:{
     path:path.resolve(__dirname, '../build'),
-    filename:'js/bundle.js'
-    //publicPath:'/'
+    filename:'js/bundle.js',
+    publicPath:'/Pokedex-Webpack/'
   },
 
  /* devServer:{

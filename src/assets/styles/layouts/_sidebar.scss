@@ -13,17 +13,9 @@
   z-index: 100;
   transition: all 0.3s ease;
 
-  > svg:first-child {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    height: 24px;
-    fill: #000;
-  }
-
   .container {
     width: 100%;
-    height: 100vh;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,7 +23,6 @@
 
   .pokemon-search {
     width: 100%;
-    margin-top: 50px;
     height: fit-content;
 
     .search-bar {
@@ -120,7 +111,7 @@
     @include mix.centered(column, center, center);
     margin: auto;
     width: 100%;
-    height: 100vh;
+    //height: 100vh;
     background: unset;
     p {
       margin-top: 10px;

@@ -11,10 +11,9 @@ const TopBar = ({ pokemons }) => {
   const sidebar = useRef(null);
   const inputMobile = useRef(null);
   let history = useHistory();
-  const [toSearch, setToSearch] = useState("");
-  const [onSearch, setOnSearch] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [toSearch,setToSearch] = useState("")
   const [names, setNames] = useState([]);
 
   useEffect(() => {
@@ -43,11 +42,8 @@ const TopBar = ({ pokemons }) => {
 
   const showSuggestions = (name) => {
     setNames([]);
-    if (suggestions.length > 0) {
+    if (suggestions.length > 0 && name !== ""){
       const searchNormalize = name.toLowerCase();
-
-      setOnSearch(false);
-
       for (const pokemon of suggestions) {
         const nameNormalize = pokemon.name.toLowerCase();
         if (
@@ -96,13 +92,13 @@ const TopBar = ({ pokemons }) => {
       </div>
 
       <div ref={sidebar} className="sidebar">
+        <div className="container">
         <CloseIcon
-          style={{padding: "8px 16px 9px 4px",cursor: "pointer" }}
+          style={{padding: "8px 16px 9px 4px",cursor: "pointer", width:'20px',height:'20px',alignSelf:'flex-start',fill:'#000' }}
           onClick={(e) => {
             showSidebar(false);
           }}
         />
-        <div className="container">
           <div className="pokemon-search">
             <form onSubmit={searchPokemon}>
               <div className="search-bar">
@@ -112,12 +108,7 @@ const TopBar = ({ pokemons }) => {
                   type="text"
                   onChange={(e) => {
                     showSuggestions(e.target.value);
-                    setToSearch(e.target.value);
-                    if (e.target.value !== "") {
-                      setOnSearch(true);
-                    } else {
-                      setOnSearch(false);
-                    }
+                    setToSearch(e.target.value)
                   }}
                   placeholder="Search pokemon"
                   value={toSearch || ""}
